@@ -8,7 +8,10 @@ import route from './Routes/userRoutes.js';
 const app = express();
 
 dotEnv.config();
-app.use(cors());
+app.use(cors({
+    origin:'*',
+    credentials: true
+}));
 app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.json())
 
