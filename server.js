@@ -1,37 +1,3 @@
-// import express from 'express';
-// import cors from "cors";
-// import bodyParser from "body-parser";
-// import mongoose from "mongoose";
-// import dotEnv from "dotenv";
-// import route from './Routes/userRoutes.js';
-
-// const app = express();
-
-// dotEnv.config();
-// app.use(cors({
-//     origin:'*',
-//     credentials: true
-// }));
-// app.use(express.urlencoded({extended:false}));
-// app.use(bodyParser.json())
-
-// const PORT = process.env.PORT
-// const DB_URL = process.env.MONGO_DB
-
-// mongoose.connect(DB_URL).then(()=>{
-//     console.log("DataBase Connected");
-//     app.listen(PORT , ()=>{
-//         console.log(`Server is running on port http://localhost:${PORT}`);
-//     })
-// }).catch((error)=>{
-//     console.log("Error" , error);
-// });
-
-// app.use('/api' , route );
-// export default app;
-
-
-
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -42,12 +8,29 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const DB_URL = process.env.MONGO_DB || "mongodb://localhost:27017/mydatabase"; 
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://fluffy-puffpuff-f11e26.netlify.app"
+];
+
+console.log("hi");
+
 app.use(cors({
-    origin: "https://fluffy-puffpuff-f11e26.netlify.app", 
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            console.log("error");
+            
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
-})); app.use(express.json());
+}));
+console.log("oka");
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const connectDB = async () => {
@@ -65,8 +48,10 @@ const connectDB = async () => {
 };
 
 connectDB();
+app.get("/", (req, res) => {
+    res.send("API is running...");
+});
 
-// Routes
 app.use("/api", route);
 
 export default app;
