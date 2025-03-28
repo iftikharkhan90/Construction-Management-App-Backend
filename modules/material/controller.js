@@ -49,26 +49,19 @@ export const getMaterial = async(req,res) => {
         console.log("hlo");
         const { type } = req.query        
         const data = await material.find({type})
-        console.log('data', data)
         if (!data) {
             return res.status(401).json({message:"Not Found"});
         }else if (data.length === 0){
             return res.status(401).json({message:"Empty"});
         }
-        // const { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount } = req.body;
-        // var body = { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount }
-        // const allData = await material.find({type})
-        
         return res.status(200).json({
             message:"Material fetched successfully" ,  
             totalLength: data.length , 
-            // Length: allData.length ,  
             DATA: data
         });
     } catch (error) {
         console.log(error);
         return res.status(500).json({message:"Error while get Material"})
-        
     }
 }
 
@@ -77,17 +70,13 @@ export const getMaterialById = async(req,res) =>{
         const id = req.params.id
         console.log("ID",id);
         const iD = await material.findById(id)
-
         if (!iD) {
             return res.status(401).json({message:"Material not found"})
         }
-
         res.status(200).json({message:"Material Fetched successfully" , Data:iD})
-
     } catch (error) {
         console.log(error);
         return res.status(500).json({message:"Error while Get Material By Id"})
-        
     }
 }
 
@@ -112,14 +101,11 @@ export const updateMaterial = async(req,res) => {
             remainingAmount:remain,
             type
         }
-        console.log("Bodyyy" , body);
-        
         const newMaterial = await material.findByIdAndUpdate(id , body , {new:true})
         console.log('newMaterial', newMaterial)
         res.status(200).json({message:"Material Update Successfully" , Data:newMaterial})
     } catch (error) {
         console.log(error);
-        
         return res.status(500).json({message:"Error while Update Material"})
     }
 }
@@ -131,7 +117,6 @@ export const delMaterial = async (req, res) => {
         if (!iD) {
             return res.status(401).json({message:"Material not found"})
         }
-        
         const del = await material.findByIdAndDelete(id);
         res.status(200).json({message:"Material Delete Successfully"})
     } catch (error) {

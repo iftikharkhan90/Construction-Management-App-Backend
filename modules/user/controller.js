@@ -1,4 +1,3 @@
-import { hash } from "bcrypt";
 import user from "../../models/user.js";
 
 

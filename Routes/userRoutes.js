@@ -10,15 +10,15 @@ route.post('/signup', [signUpValidationRequest] , signUp );
 route.get('/get', getAllUsers);
 route.post('/login', [loginValidationRequest], login)
 
-route.post('/material'  , createMaterial)
-route.get('/getmaterials' , getMaterial)
-route.get('/byId/:id' , getMaterialById)    
-route.put('/update/:id' , updateMaterial)
-route.delete('/del/:id' , delMaterial)
+route.post('/material'  ,[auth] , createMaterial)
+route.get('/getmaterials', [auth], getMaterial)
+route.get('/byId/:id', [auth], getMaterialById)    
+route.put('/update/:id', [auth], updateMaterial)
+route.delete('/del/:id', [auth], delMaterial)
 
-route.post('/cons', createConstructor)
-route.get('/getcons', getConstructor)
-route.put('/updatecons/:id' , updateConstructor)
-route.delete('/delcons/:id' , deleteConstructor)
+route.post('/cons', [auth], createConstructor)
+route.get('/getcons', [auth], getConstructor)
+route.put('/updatecons/:id', [auth], updateConstructor)
+route.delete('/delcons/:id', [auth], deleteConstructor)
 
 export default route; 

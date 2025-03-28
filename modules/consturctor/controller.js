@@ -27,7 +27,6 @@ export const createConstructor = async (req,res) => {
 
 export const getConstructor = async (req,res) => {
     try {
-        // const {type} = req.body
         const labour = await constructor.find()
         if (!labour) {
             return res.status(401).json({ message:'Constructor not Found'})
