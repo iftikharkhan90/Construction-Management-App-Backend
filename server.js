@@ -28,3 +28,4 @@ mongoose.connect(DB_URL).then(()=>{
 });
 
 app.use('/api' , route );
+export default app;
