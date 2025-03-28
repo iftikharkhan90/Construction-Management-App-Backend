@@ -42,8 +42,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const DB_URL = process.env.MONGO_DB || "mongodb://localhost:27017/mydatabase"; 
-app.use(cors({ origin: "*", credentials: true }));
-app.use(express.json());
+app.use(cors({
+    origin: "https://fluffy-puffpuff-f11e26.netlify.app", 
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+    credentials: true
+})); app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const connectDB = async () => {
