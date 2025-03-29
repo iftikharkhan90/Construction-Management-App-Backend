@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 const DB_URL = process.env.MONGO_DB || "mongodb://localhost:27017/mydatabase"; 
 const allowedOrigins = [
     "http://localhost:5173",
-    "https://fluffy-puffpuff-f11e26.netlify.app"
+    "https://construction-management-site.netlify.app/"
 ];
 
 console.log("hi");
