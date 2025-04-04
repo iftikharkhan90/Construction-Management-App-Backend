@@ -21,7 +21,7 @@ export const createMaterial = async(req,res)=>{
              type
            };
         if (remaining < 0) {
-            return res.status(400).json({ message: "Please enter correct payment" })
+            return res.status(401).json({ message: "Please enter correct payment" })
         }
         const item = await material.findOne({itemName , type})
         console.log(item);

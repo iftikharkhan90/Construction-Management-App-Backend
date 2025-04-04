@@ -8,7 +8,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const DB_URL = process.env.MONGO_DB || "mongodb://localhost:27017/mydatabase"; 
-// const allowedOrigins = [
 
 const allowedOrigins = [
     "http://localhost:5173",
