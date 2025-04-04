@@ -17,7 +17,6 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: (origin, callback) => {
-        // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
@@ -37,7 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+        await mongoose.connect(DB_URL);
         console.log(" Database Connected");
 
         app.listen(PORT, () => {

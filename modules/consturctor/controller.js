@@ -7,15 +7,14 @@ export const createConstructor = async (req,res) => {
         const capitalizedData = capitalizeFields({ name , type }, ["name" , "type"]);
         const capitalName = capitalizedData.name;
         const capitalType = capitalizedData.type
-        console.log(capitalName , capitalType);
     
         const remain = totalAmount - payAmount
-        const lbr = await constructor.findOne({type})
-        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType };
-        console.log(lbr);
         
+        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType };        
+        const lbr = await constructor.findOne({type:body.type})
+        console.log(lbr);
         if (lbr) {
-            return res.status(401).json({message:'Labourer alreday exist'})
+            return res.status(401).json({message:'Constructor alreday exist'})
         }
         const data = await constructor.create(body)
         res.status(200).json({message:"created successfully" , Data:data})

@@ -7,15 +7,10 @@ export const createMaterial = async(req,res)=>{
         const { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount , type } = req.body;
         var body = { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type }
                 const price = body.itemPrice
-                console.log("price of a item",price);
                 const items = body.totalItems
-                console.log("total items" , items);
                 const amount = price *items
-                console.log("total amount" , amount);
                 const pay = body.payAmount
-                console.log("pay amount" , pay);
                 const remaining = amount-pay
-                console.log("remaining amount" ,remaining);
         var body = {
              itemName: itemName,
              itemPrice, 
@@ -25,8 +20,12 @@ export const createMaterial = async(req,res)=>{
              remainingAmount: remaining,
              type
            };
-
-        const item = await material.findOne({itemName})
+        if (remaining < 0) {
+            return res.status(400).json({ message: "Please enter correct payment" })
+        }
+        const item = await material.findOne({itemName , type})
+        console.log(item);
+        
         if (item) {
             console.log("Item Already Exist in Db ");
             return res.status(401).json({message:"Same Item Already Exist"})
