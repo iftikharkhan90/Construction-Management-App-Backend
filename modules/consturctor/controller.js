@@ -10,12 +10,10 @@ export const createConstructor = async (req,res) => {
     
         const remain = totalAmount - payAmount
         
-        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType };        
-        // const lbr = await constructor.findOne({type:body.type})
-        // console.log(lbr);
-        // if (lbr) {
-        //     return res.status(401).json({message:'Constructor alreday exist'})
-        // }
+        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType }
+        if (remain < 0) {
+            return res.status(401).json({ message: "Please enter correct payment" })
+        }
         const data = await constructor.create(body)
         res.status(200).json({message:"created successfully" , Data:data})
     } catch (error) {

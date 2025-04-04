@@ -23,13 +23,13 @@ export const createMaterial = async(req,res)=>{
         if (remaining < 0) {
             return res.status(401).json({ message: "Please enter correct payment" })
         }
-        const item = await material.findOne({itemName , type})
-        console.log(item);
+        // const item = await material.findOne({itemName , type})
+        // console.log(item);
         
-        if (item) {
-            console.log("Item Already Exist in Db ");
-            return res.status(401).json({message:"Same Item Already Exist"})
-        }
+        // if (item) {
+        //     console.log("Item Already Exist in Db ");
+        //     return res.status(401).json({message:"Same Item Already Exist"})
+        // }
 
         const data = await material.create(body);
         res.status(200).json({
