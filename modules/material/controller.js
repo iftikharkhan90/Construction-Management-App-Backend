@@ -53,9 +53,27 @@ export const getMaterial = async(req,res) => {
         }else if (data.length === 0){
             return res.status(401).json({message:"Empty"});
         }
+        const aggregationResult = await material.aggregate([
+            { $match: { type } },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$totalAmount" },
+                    payAmount: { $sum: "$payAmount" },
+                    remainingAmount: { $sum: "$remainingAmount" }
+                }
+            }
+        ]);
+
+        const { totalAmount = 0, payAmount = 0, remainingAmount = 0 } = aggregationResult[0] || {};
+        console.log(totalAmount , payAmount , remainingAmount);
+        
         return res.status(200).json({
             message:"Material fetched successfully" ,  
             totalLength: data.length , 
+            totalAmount,
+            payAmount,
+            remainingAmount,
             DATA: data
         });
     } catch (error) {

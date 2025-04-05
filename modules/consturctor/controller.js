@@ -24,19 +24,39 @@ export const createConstructor = async (req,res) => {
 
 export const getConstructor = async (req,res) => {
     try {
-        const labour = await constructor.find()
-        if (!labour) {
-            return res.status(401).json({ message:'Constructor not Found'})
-        }
-
+        // const labour = await constructor.find()
+        // if (!labour) {
+        //     return res.status(401).json({ message:'Constructor not Found'})
+        // }
+        // const {name} = req.query
         const cons = await constructor.find()
         if (!cons.length) {
             return res.status(401).json({message:"Not Found"})
         }
-        res.status(200).json({message:"Labourer Get Successfully" ,Length:labour.length, data: labour})
+        const aggregationResult = await constructor.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$totalAmount" },
+                    payAmount: { $sum: "$payAmount" },
+                    remainingAmount: { $sum: "$remainingAmount" }
+                }
+            }
+        ]);
+
+        const { totalAmount = 0, payAmount = 0, remainingAmount = 0 } = aggregationResult[0] || {};
+        console.log(totalAmount, payAmount, remainingAmount);
+
+        res.status(200).json({
+             message: "Labourer Get Successfully", 
+             Length: cons.length, 
+             totalAmount, 
+             payAmount, 
+             remainingAmount,
+             data: cons ,
+            })
     } catch (error) {
-        console.log(error);
-        
+        console.log(error);        
         return res.status(500).json({message:"Error while get Labourer"})
     }
 }
