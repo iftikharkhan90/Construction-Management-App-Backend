@@ -35,19 +35,15 @@ export const loginValidationRequest = (req,res,next) => {
 export const auth = async (req, res, next) => {
     try {
         const token = req.headers['authorization'];
-        // check token
-
         if (!token) {
             return res.status(401).json({
                 message: 'You are not authorized to access this protected resource',
                 statusCode: 401,
             });
         }
-
         const protectedToken = token.slice('Bearer '.length);
         const decoded = jwt.verify(protectedToken, config.jwt.secret);
         
-
         next();
     } catch (error) {
         console.log(error);

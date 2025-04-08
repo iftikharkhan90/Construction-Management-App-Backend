@@ -20,6 +20,14 @@ const constructor = new mongoose.Schema({
     type:{
         type:String,
         required:true
+    },
+    date:{
+        type:Date,
+        // required:true
+    },
+    isLinked:{
+        type:Boolean,
+        default:true
     }
 })
 

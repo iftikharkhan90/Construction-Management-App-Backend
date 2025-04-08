@@ -7,7 +7,7 @@ const material = new mongoose.Schema({
     },
     itemPrice:{
         type:Number,
-        required:true
+        // required:true
     },
     totalItems:{
         type:Number,
@@ -28,6 +28,14 @@ const material = new mongoose.Schema({
     type:{
         type:"String",
         required:true
+    },
+    date: {
+        type: Date,
+        // required: true
+    },
+    isLinked: {
+        type: Boolean,
+        default: true
     }
 })
 

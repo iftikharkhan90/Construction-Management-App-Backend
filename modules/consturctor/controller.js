@@ -3,14 +3,18 @@ import {capitalizeFields} from '../../middlewares/Utility/utility.js'
 
 export const createConstructor = async (req,res) => {
     try {
-        const {name , totalAmount , payAmount  , type} = req.body
+        const {name , totalAmount , payAmount  , type , date , linked} = req.body
         const capitalizedData = capitalizeFields({ name , type }, ["name" , "type"]);
         const capitalName = capitalizedData.name;
         const capitalType = capitalizedData.type
     
         const remain = totalAmount - payAmount
         
-        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType }
+        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType , date , linked }
+        const cons = await constructor.findOne({ name })
+        if (cons) {
+            return res.status(401).json({ message: "Already Exist" })
+        }
         if (remain < 0) {
             return res.status(401).json({ message: "Please enter correct payment" })
         }
@@ -24,11 +28,6 @@ export const createConstructor = async (req,res) => {
 
 export const getConstructor = async (req,res) => {
     try {
-        // const labour = await constructor.find()
-        // if (!labour) {
-        //     return res.status(401).json({ message:'Constructor not Found'})
-        // }
-        // const {name} = req.query
         const cons = await constructor.find()
         if (!cons.length) {
             return res.status(401).json({message:"Not Found"})

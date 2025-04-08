@@ -3,11 +3,8 @@ import constructor from "../../models/constructor.js";
 
 export const getTotalExpensives = async (req, res) => {
     try {
-        // Fetching data from both collections
         const materialData = await material.find();
         const constructorData = await constructor.find();
-
-        // Function to calculate total fields from an array of objects
         const calculateTotals = (data) => {
             return data.reduce(
                 (acc, item) => {
@@ -19,12 +16,8 @@ export const getTotalExpensives = async (req, res) => {
                 { totalAmount: 0, payAmount: 0, remainingAmount: 0 }
             );
         };
-
-        // Calculate totals from both collections
         const materialTotals = calculateTotals(materialData);
         const constructorTotals = calculateTotals(constructorData);
-
-        // Combine totals
         const combinedTotals = {
             totalAmount: materialTotals.totalAmount + constructorTotals.totalAmount,
             payAmount: materialTotals.payAmount + constructorTotals.payAmount,
