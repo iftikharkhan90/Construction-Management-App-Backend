@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const material = new mongoose.Schema({
     itemName:{
         type:String,
-        requiredd:true,
+        required:true,
     },
     itemPrice:{
         type:Number,
@@ -15,15 +15,15 @@ const material = new mongoose.Schema({
     },
     totalAmount:{
         type:Number,
-        required:true
+        // required:true
     },
     payAmount:{
         type:Number,
-        required:true
+        // required:true
     },
     remainingAmount:{
         type:Number,
-        required:true
+        // required:true
     },
     type:{
         type:"String",

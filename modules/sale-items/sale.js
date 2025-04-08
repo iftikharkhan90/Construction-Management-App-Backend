@@ -1,11 +1,12 @@
-import material from "../../models/material";
+import material from "../../models/material.js";
 
 export const createSaleItems = async(req,res) => {
     try {
-        const {name , totalAmount} = req.body
-        const body = {name  , totalAmount}
+        const {itemName , totalAmount , type} = req.body
+        const body = {itemName  , totalAmount , type}
+        const data = await material.create(body);
 
-        return res.status(200).json({message:"Item created successfully" , Data:body})
+        return res.status(200).json({message:"Item created successfully" , Data:data})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error while creating Material" })
@@ -16,7 +17,7 @@ export const getSaleItem = async(req,res)=>{
     try {
         const {type} =  req.query
         const item = await material.find({type})
-        if (!item.length == 0) {
+        if (!item.length == null) {
             return res.status(401).json({message:"Not Found"})
         }
 

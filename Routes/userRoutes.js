@@ -5,6 +5,7 @@ import { createMaterial, delMaterial, getMaterial, getMaterialById, updateMateri
 import { createConstructor, deleteConstructor, getConstructor, updateConstructor } from "../modules/consturctor/controller.js";
 import {   auth, loginValidationRequest, signUpValidationRequest } from '../middlewares/validation/index.js'
 import { getTotalExpensives } from "../modules/total/total.js";
+import { createSaleItems, getSaleItem } from "../modules/sale-items/sale.js";
 const route = express.Router();
 
 route.post('/signup', [signUpValidationRequest] , signUp );
@@ -23,5 +24,8 @@ route.put('/updatecons/:id' , updateConstructor)
 route.delete('/delcons/:id' , deleteConstructor)
 
 route.get('/total' , getTotalExpensives)
+
+route.post('/sale' , createSaleItems)
+route.get('/getsale' , getSaleItem)
 
 export default route; 
