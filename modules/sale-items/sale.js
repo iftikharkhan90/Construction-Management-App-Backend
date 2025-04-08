@@ -1,9 +1,11 @@
 import material from "../../models/material.js";
+import moment from "moment";
 
 export const createSaleItems = async(req,res) => {
     try {
-        const {itemName , totalAmount , type} = req.body
-        const body = {itemName  , totalAmount , type}
+        const {itemName , totalAmount , type , date} = req.body
+        const formattedDate = moment(req.body.date, "DD/MM/YYYY").format("YYYY-MM-DD");
+        const body = {itemName  , totalAmount , type , date:formattedDate}
         const data = await material.create(body);
 
         return res.status(200).json({message:"Item created successfully" , Data:data})
