@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const material = new mongoose.Schema({
     itemName:{
         type:String,
-        requiredd:true
+        requiredd:true,
     },
     itemPrice:{
         type:Number,
@@ -11,7 +11,7 @@ const material = new mongoose.Schema({
     },
     totalItems:{
         type:Number,
-        required:true
+        // required:true
     },
     totalAmount:{
         type:Number,
@@ -35,7 +35,7 @@ const material = new mongoose.Schema({
     },
     isLinked: {
         type: Boolean,
-        default: true
+        default: false
     }
 })
 

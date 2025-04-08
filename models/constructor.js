@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const constructor = new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:true,
     },
     totalAmount:{
         type:Number,
@@ -27,7 +27,7 @@ const constructor = new mongoose.Schema({
     },
     isLinked:{
         type:Boolean,
-        default:true
+        default:false
     }
 })
 

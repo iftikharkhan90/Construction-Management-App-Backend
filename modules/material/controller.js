@@ -1,11 +1,12 @@
 import material from "../../models/material.js"
+import moment from "moment";
 
 export const createMaterial = async(req,res)=>{
     try {
         console.log(req.body);
         console.log("Try");
         const { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date , linked  } = req.body;
-        var body = { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date: new Date(date) , linked}
+        var body = { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date , linked}
         const mat = await material.findOne({itemName})
         if(mat){
             return res.status(401).json({message:"Already Exist!"})
@@ -16,7 +17,7 @@ export const createMaterial = async(req,res)=>{
                 const pay = body.payAmount
                 const remaining = amount || totalAmount-pay
                 console.log("hi",req.body.date);
-                
+        const formattedDate = moment(req.body.date, "DD/MM/YYYY").format("YYYY-MM-DD");
         var body = {
              itemName: itemName,
              itemPrice, 
@@ -24,7 +25,9 @@ export const createMaterial = async(req,res)=>{
              totalAmount: amount || totalAmount, 
              payAmount, 
              remainingAmount: remaining,
-             type
+             type,
+             date:formattedDate,
+             linked
            };
         if (remaining < 0) {
             return res.status(401).json({ message: "Please enter correct payment" })
