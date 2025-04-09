@@ -1,5 +1,6 @@
 import constructor from '../../models/constructor.js'
 import {capitalizeFields} from '../../middlewares/Utility/utility.js'
+import moment from 'moment'
 
 export const createConstructor = async (req,res) => {
     try {
@@ -9,8 +10,10 @@ export const createConstructor = async (req,res) => {
         const capitalType = capitalizedData.type
     
         const remain = totalAmount - payAmount
+        const formattedDate = moment(req.body.date, "DD/MM/YYYY").format("YYYY-MM-DD");
+
         
-        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType , date , linked }
+        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType , date:formattedDate , linked }
         const cons = await constructor.findOne({ name })
         if (cons) {
             return res.status(401).json({ message: "Already Exist" })

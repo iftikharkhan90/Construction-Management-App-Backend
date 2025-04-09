@@ -3,7 +3,12 @@ import mongoose from 'mongoose';
 const material = new mongoose.Schema({
     itemName:{
         type:String,
-        required:true,
+        // required:true,
+    },
+     userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true,
     },
     itemPrice:{
         type:Number,

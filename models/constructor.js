@@ -3,23 +3,23 @@ import mongoose from "mongoose";
 const constructor = new mongoose.Schema({
     name:{
         type:String,
-        required:true,
+        // required:true,
     },
     totalAmount:{
         type:Number,
-        required:true
+        // required:true
     },
     payAmount:{
         type:Number,
-        required:true
+        // required:true
     },
     remainingAmount:{
         type:Number,
-        required:true
+        // required:true
     },
     type:{
         type:String,
-        required:true
+        // required:true
     },
     date:{
         type:Date,
