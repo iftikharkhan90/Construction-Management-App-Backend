@@ -6,6 +6,7 @@ import { createConstructor, deleteConstructor, getConstructor, updateConstructor
 import {   auth, loginValidationRequest, signUpValidationRequest } from '../middlewares/validation/index.js'
 import { getTotalExpensives } from "../modules/total/total.js";
 import { createSaleItems, getSaleItem } from "../modules/sale-items/sale.js";
+import { createLinkedItem, getLinkedItem } from "../modules/linked/linked.js";
 const route = express.Router();
 
 route.post('/signup', [signUpValidationRequest] , signUp );
@@ -27,5 +28,8 @@ route.get('/total' , getTotalExpensives)
 
 route.post('/sale' , createSaleItems)
 route.get('/getsale' , getSaleItem)
+
+route.post("/linked" , createLinkedItem)
+route.get('/getlinked' , getLinkedItem )
 
 export default route; 

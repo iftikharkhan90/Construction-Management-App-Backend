@@ -41,6 +41,9 @@ const material = new mongoose.Schema({
     isLinked: {
         type: Boolean,
         default: false
+    },
+    selectedItem:{
+        type:String
     }
 })
 
