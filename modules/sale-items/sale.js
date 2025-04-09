@@ -8,7 +8,7 @@ export const createSaleItems = async(req,res) => {
         const body = {itemName  , totalAmount , type , date:formattedDate , userId}
         const data = await material.create(body);
 
-        return res.status(200).json({message:"Item created successfully" , Data:data})
+        return res.status(200).json({message:"Item created successfully" , Data:data , userId:userId})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error while creating Material" })
@@ -17,8 +17,8 @@ export const createSaleItems = async(req,res) => {
 
 export const getSaleItem = async(req,res)=>{
     try {
-        const {type} =  req.query
-        const item = await material.find({type})
+        const {type , userId} =  req.query
+        const item = await material.find({type , userId})
         if (!item.length == null) {
             return res.status(401).json({message:"Not Found"})
         }

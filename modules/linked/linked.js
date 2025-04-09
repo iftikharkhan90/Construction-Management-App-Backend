@@ -13,8 +13,8 @@ export const createLinkedItem = async(req,res)=>{
 
 export const getLinkedItem = async(req,res)=>{
     try {
-        const { type } = req.query
-        const data = await material.find({ type })
+        const { type , userId } = req.query
+        const data = await material.find({ type , userId })
         if (!data) {
             return res.status(401).json({ message: "Not Found" });
         } else if (data.length === 0) {

@@ -1,6 +1,7 @@
 import constructor from '../../models/constructor.js'
 import {capitalizeFields} from '../../middlewares/Utility/utility.js'
 import moment from 'moment'
+import mongoose from 'mongoose'
 
 export const createConstructor = async (req,res) => {
     try {
@@ -13,16 +14,12 @@ export const createConstructor = async (req,res) => {
         const formattedDate = moment(req.body.date, "DD/MM/YYYY").format("YYYY-MM-DD");
 
         
-        const body={name:capitalName,totalAmount,payAmount,remainingAmount:remain,type:capitalType,date:formattedDate,linked,userId}
-        const cons = await constructor.findOne({ name })
-        if (cons) {
-            return res.status(401).json({ message: "Already Exist" })
-        }
         if (remain < 0) {
             return res.status(401).json({ message: "Please enter correct payment" })
         }
+        const body={name:capitalName,totalAmount,payAmount,remainingAmount:remain,type:capitalType,date:formattedDate,linked,userId}
         const data = await constructor.create(body)
-        res.status(200).json({message:"created successfully" , Data:data})
+        res.status(200).json({message:"created successfully" , Data:data , userId:userId})
     } catch (error) {
         console.log(error);
         return res.status(500).json({message:"Error while Creating Labourer"})
@@ -31,11 +28,15 @@ export const createConstructor = async (req,res) => {
 
 export const getConstructor = async (req,res) => {
     try {
-        const cons = await constructor.find()
+        const {userId} = req.query
+        const cons = await constructor.find({userId})
         if (!cons.length) {
             return res.status(401).json({message:"Not Found"})
         }
+        const userObjectId = new mongoose.Types.ObjectId(userId)
+        const filter = {userId:userObjectId}
         const aggregationResult = await constructor.aggregate([
+            { $match: filter },
             {
                 $group: {
                     _id: null,

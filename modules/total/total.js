@@ -3,8 +3,9 @@ import constructor from "../../models/constructor.js";
 
 export const getTotalExpensives = async (req, res) => {
     try {
-        const materialData = await material.find();
-        const constructorData = await constructor.find();
+        const {userId} = req.query
+        const materialData = await material.find({ userId, type: { $ne: "Sale" } });
+        const constructorData = await constructor.find({ userId, type: { $ne: "Sale" } });
         const calculateTotals = (data) => {
             return data.reduce(
                 (acc, item) => {
@@ -24,6 +25,9 @@ export const getTotalExpensives = async (req, res) => {
             remainingAmount:
                 materialTotals.remainingAmount + constructorTotals.remainingAmount,
         };
+        if (combinedTotals.payAmount > combinedTotals.totalAmount){
+            return res.status(401).json({message:"Incorrect Pay Amount"})
+        }
 
         return res.status(200).json({
             message: "Totals fetched successfully",

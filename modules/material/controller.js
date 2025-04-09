@@ -1,62 +1,72 @@
 import material from "../../models/material.js"
+import mongoose from "mongoose";
 import moment from "moment";
 
-export const createMaterial = async(req,res)=>{
+export const createMaterial = async (req, res) => {
     try {
         console.log(req.body);
         console.log("Try");
-        const { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date , linked , userId  } = req.body;
-        var body = { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date , linked , userId}
-        const mat = await material.findOne({itemName})
-        if(mat){
-            return res.status(401).json({message:"Already Exist!"})
+
+        var { itemName, itemPrice, totalItems, totalAmount, payAmount, type, date, linked, userId } = req.body;
+        const mat = await material.findOne({ itemName , userId });
+        if (mat) {
+            return res.status(401).json({ message: "Already Exist!" });
         }
-                const price = body.itemPrice
-                const items = body.totalItems
-                const amount = price *items
-                const pay = body.payAmount
-                const remaining = amount || totalAmount-pay
-                console.log("hi",req.body.date);
-        const formattedDate = moment(req.body.date, "DD/MM/YYYY").format("YYYY-MM-DD");
-        var body = {
-             itemName: itemName,
-             itemPrice, 
-             totalItems, 
-             totalAmount: amount || totalAmount, 
-             payAmount, 
-             remainingAmount: remaining,
-             type,
-             date:formattedDate,
-             linked,
-             userId
-           };
+        const calculatedTotalAmount = totalAmount || (itemPrice * totalItems);
+        const remaining = calculatedTotalAmount - payAmount;
+
+        // Format date
+        const formattedDate = moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
+
+        // Body data for creation
+        const body = {
+            itemName,
+            itemPrice,
+            totalItems,
+            totalAmount: calculatedTotalAmount, // Either manual or calculated
+            payAmount,
+            remainingAmount: remaining, // remaining = totalAmount - payAmount
+            type,
+            date: formattedDate,
+            linked,
+            userId
+        };
+
+        // Validation for remaining amount
         if (remaining < 0) {
-            return res.status(401).json({ message: "Please enter correct payment" })
+            return res.status(401).json({ message: "Please enter correct payment" });
         }
+
+        // Create material entry
         const data = await material.create(body);
         res.status(200).json({
-            message:"Data created successfully",
-            DATA : data
-        })
+            message: "Data created successfully",
+            DATA: data
+        });
+
     } catch (error) {
         console.log(error);
-        
-        return res.status(500).json({message:"Error while creating Material"})
+        return res.status(500).json({ message: "Error while creating Material" });
     }
-}
+};
+
 
 export const getMaterial = async(req,res) => {
     try {
-        console.log("hlo");
-        const { type } = req.query        
-        const data = await material.find({type})
+        const { type , userId } = req.query  
+        console.log("userId" , userId );
+        const data = await material.find({type ,userId})
         if (!data) {
             return res.status(401).json({message:"Not Found"});
         }else if (data.length === 0){
             return res.status(401).json({message:"Empty"});
         }
+        const userObjectId = new mongoose.Types.ObjectId(userId); 
+
+        const filter = { type, userId: userObjectId };
+
         const aggregationResult = await material.aggregate([
-            { $match: { type } },
+            { $match: filter},
             {
                 $group: {
                     _id: null,
@@ -66,7 +76,6 @@ export const getMaterial = async(req,res) => {
                 }
             }
         ]);
-
         const { totalAmount = 0, payAmount = 0, remainingAmount = 0 } = aggregationResult[0] || {};
         console.log(totalAmount , payAmount , remainingAmount);
         

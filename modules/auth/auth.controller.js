@@ -38,7 +38,7 @@ export const login = async(req,res)=>{
         const token = await createToken(user._id);
         console.log("Token" , token);
         console.log('userId', userId)
-        return res.status(200).json({message:'User Login Successfully' , data : user , token : token , userId })
+        return res.status(200).json({message:'User Login Successfully' , data : user , token : token , userId:userId })
     } catch (error) {
         console.log("error" , error)
         return res.status(500).json({ message: 'Error while login User', error });
