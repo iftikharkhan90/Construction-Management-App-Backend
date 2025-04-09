@@ -2,7 +2,7 @@ import material from "../../models/material";
 
 export const createLinkedItem = async(req,res)=>{
     try {
-        const { payAmount , date , type , linked} = req.body
+        const { payAmount , date , type , linked , userId} = req.body
         
 
     } catch (error) {

@@ -5,6 +5,11 @@ const constructor = new mongoose.Schema({
         type:String,
         // required:true,
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        // required: true,
+    },
     totalAmount:{
         type:Number,
         // required:true

@@ -4,7 +4,7 @@ import moment from 'moment'
 
 export const createConstructor = async (req,res) => {
     try {
-        const {name , totalAmount , payAmount  , type , date , linked} = req.body
+        const {name , totalAmount , payAmount  , type , date , linked , userId} = req.body
         const capitalizedData = capitalizeFields({ name , type }, ["name" , "type"]);
         const capitalName = capitalizedData.name;
         const capitalType = capitalizedData.type
@@ -13,7 +13,7 @@ export const createConstructor = async (req,res) => {
         const formattedDate = moment(req.body.date, "DD/MM/YYYY").format("YYYY-MM-DD");
 
         
-        const body = { name:capitalName, totalAmount, payAmount, remainingAmount:remain , type:capitalType , date:formattedDate , linked }
+        const body={name:capitalName,totalAmount,payAmount,remainingAmount:remain,type:capitalType,date:formattedDate,linked,userId}
         const cons = await constructor.findOne({ name })
         if (cons) {
             return res.status(401).json({ message: "Already Exist" })

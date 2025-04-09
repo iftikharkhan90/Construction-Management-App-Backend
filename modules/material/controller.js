@@ -5,8 +5,8 @@ export const createMaterial = async(req,res)=>{
     try {
         console.log(req.body);
         console.log("Try");
-        const { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date , linked  } = req.body;
-        var body = { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date , linked}
+        const { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date , linked , userId  } = req.body;
+        var body = { itemName, itemPrice, totalItems, totalAmount, payAmount, remainingAmount, type, date , linked , userId}
         const mat = await material.findOne({itemName})
         if(mat){
             return res.status(401).json({message:"Already Exist!"})
@@ -27,7 +27,8 @@ export const createMaterial = async(req,res)=>{
              remainingAmount: remaining,
              type,
              date:formattedDate,
-             linked
+             linked,
+             userId
            };
         if (remaining < 0) {
             return res.status(401).json({ message: "Please enter correct payment" })

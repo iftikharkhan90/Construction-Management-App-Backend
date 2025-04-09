@@ -6,7 +6,6 @@ import user from "../../models/user.js";
 
 export const signUp = async (req, res) => {
     try {
-        console.log("ReqBody", req.body);
         const { name, email, password } = req.body;
         const userExist = await User.findOne({ email });
         if (userExist) {
@@ -35,9 +34,11 @@ export const login = async(req,res)=>{
         if (!validPassword) {
             return res.status(401).json({message:"Password is incorrect"})
         }
+        const userId = user._id;
         const token = await createToken(user._id);
         console.log("Token" , token);
-        return res.status(200).json({message:'User Login Successfully' , data : user , token : token })
+        console.log('userId', userId)
+        return res.status(200).json({message:'User Login Successfully' , data : user , token : token , userId })
     } catch (error) {
         console.log("error" , error)
         return res.status(500).json({ message: 'Error while login User', error });
