@@ -18,7 +18,7 @@ export const createSaleItems = async(req,res) => {
 export const getSaleItem = async(req,res)=>{
     try {
         const {type , userId} =  req.query
-        const item = await material.find({type , userId})
+        const item = await material.find({ type, userId }).sort({ date: -1 })
         if (!item.length == null) {
             return res.status(401).json({message:"Not Found"})
         }

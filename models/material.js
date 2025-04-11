@@ -1,38 +1,38 @@
 import mongoose from 'mongoose';
 
 const material = new mongoose.Schema({
-    itemName:{
-        type:String,
+    itemName: {
+        type: String,
         // required:true,
     },
-     userId: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
         // required: true,
     },
-    itemPrice:{
-        type:Number,
+    itemPrice: {
+        type: Number,
         // required:true
     },
-    totalItems:{
-        type:Number,
+    totalItems: {
+        type: Number,
         // required:true
     },
-    totalAmount:{
-        type:Number,
+    totalAmount: {
+        type: Number,
         // required:true
     },
-    payAmount:{
-        type:Number,
+    payAmount: {
+        type: Number,
         // required:true
     },
-    remainingAmount:{
-        type:Number,
+    remainingAmount: {
+        type: Number,
         // required:true
     },
-    type:{
-        type:"String",
-        required:true
+    type: {
+        type: String,
+        required: true
     },
     date: {
         type: Date,
@@ -42,10 +42,10 @@ const material = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    selectedItem:{
-        type:String
+    selectedItem: {
+        type: String
     }
 })
 
-export default mongoose.model('Building-Materials' , material);
+export default mongoose.model('Building-Materials', material);
 

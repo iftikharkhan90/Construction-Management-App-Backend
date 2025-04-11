@@ -6,7 +6,8 @@ import { createConstructor, deleteConstructor, getConstructor, updateConstructor
 import {   auth, loginValidationRequest, signUpValidationRequest } from '../middlewares/validation/index.js'
 import { getTotalExpensives } from "../modules/total/total.js";
 import { createSaleItems, getSaleItem } from "../modules/sale-items/sale.js";
-import { createLinkedItem, getLinkedItem } from "../modules/linked/linked.js";
+// import { createLinkedItem, getLinkedItem, getSelectedItems } from "../modules/linked/linked.js";
+import { createLinkedItem, createLinkedItemConstructor, getLinkedItem, getSelctedItems } from "../modules/linked/linked.js";
 const route = express.Router();
 
 route.post('/signup', [signUpValidationRequest] , signUp );
@@ -30,6 +31,8 @@ route.post('/sale' , createSaleItems)
 route.get('/getsale' , getSaleItem)
 
 route.post("/linked" , createLinkedItem)
+route.post("/linkedcons" , createLinkedItemConstructor)
 route.get('/getlinked' , getLinkedItem )
+route.get('/getselected', getSelctedItems )
 
 export default route; 

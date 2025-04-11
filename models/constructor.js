@@ -33,6 +33,10 @@ const constructor = new mongoose.Schema({
     isLinked:{
         type:Boolean,
         default:false
+    },
+    selectedItem: { 
+        type: String,
+        default: null,
     }
 })
 

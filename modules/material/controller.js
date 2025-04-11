@@ -14,30 +14,24 @@ export const createMaterial = async (req, res) => {
         }
         const calculatedTotalAmount = totalAmount || (itemPrice * totalItems);
         const remaining = calculatedTotalAmount - payAmount;
-
-        // Format date
         const formattedDate = moment(date, "DD/MM/YYYY").format("YYYY-MM-DD");
 
-        // Body data for creation
         const body = {
             itemName,
             itemPrice,
             totalItems,
-            totalAmount: calculatedTotalAmount, // Either manual or calculated
+            totalAmount: calculatedTotalAmount, 
             payAmount,
-            remainingAmount: remaining, // remaining = totalAmount - payAmount
+            remainingAmount: remaining, 
             type,
             date: formattedDate,
             linked,
             userId
         };
 
-        // Validation for remaining amount
         if (remaining < 0) {
             return res.status(401).json({ message: "Please enter correct payment" });
         }
-
-        // Create material entry
         const data = await material.create(body);
         res.status(200).json({
             message: "Data created successfully",
@@ -55,7 +49,7 @@ export const getMaterial = async(req,res) => {
     try {
         const { type , userId } = req.query  
         console.log("userId" , userId );
-        const data = await material.find({type ,userId})
+        const data = await material.find({ type, userId }).sort({ date: -1 })
         if (!data) {
             return res.status(401).json({message:"Not Found"});
         }else if (data.length === 0){

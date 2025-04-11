@@ -9,10 +9,8 @@ export const createConstructor = async (req,res) => {
         const capitalizedData = capitalizeFields({ name , type }, ["name" , "type"]);
         const capitalName = capitalizedData.name;
         const capitalType = capitalizedData.type
-    
         const remain = totalAmount - payAmount
         const formattedDate = moment(req.body.date, "DD/MM/YYYY").format("YYYY-MM-DD");
-
         
         if (remain < 0) {
             return res.status(401).json({ message: "Please enter correct payment" })
@@ -29,7 +27,7 @@ export const createConstructor = async (req,res) => {
 export const getConstructor = async (req,res) => {
     try {
         const {userId} = req.query
-        const cons = await constructor.find({userId})
+        const cons = await constructor.find({ userId }).sort({ date: -1 })
         if (!cons.length) {
             return res.status(401).json({message:"Not Found"})
         }
