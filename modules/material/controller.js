@@ -55,10 +55,8 @@ export const getMaterial = async(req,res) => {
         }else if (data.length === 0){
             return res.status(401).json({message:"Empty"});
         }
-        const userObjectId = new mongoose.Types.ObjectId(userId); 
-
-        const filter = { type, userId: userObjectId };
-
+        const userObjectId = new mongoose.Types.ObjectId(userId)
+        const filter = { type, userId: userObjectId }
         const aggregationResult = await material.aggregate([
             { $match: filter},
             {
@@ -69,10 +67,9 @@ export const getMaterial = async(req,res) => {
                     remainingAmount: { $sum: "$remainingAmount" }
                 }
             }
-        ]);
+        ])
         const { totalAmount = 0, payAmount = 0, remainingAmount = 0 } = aggregationResult[0] || {};
         console.log(totalAmount , payAmount , remainingAmount);
-        
         return res.status(200).json({
             message:"Material fetched successfully" ,  
             totalLength: data.length , 
