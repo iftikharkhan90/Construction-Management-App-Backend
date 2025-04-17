@@ -57,6 +57,7 @@ export const createLinkedItem = async (req, res) => {
         return res.status(500).json({ message: "Error while processing linked item" });
     }
 }
+
 export const createLinkedItemConstructor = async (req, res) => {
     try {
         const { payAmount, date, type, isLinked, userId, selectedItem } = req.body;
@@ -142,7 +143,7 @@ export const getLinkedItem = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: "Error while fetching linked materials" });
     }
-};
+}
 
 export const getSelctedItems = async (req, res) => {
 
@@ -150,7 +151,7 @@ export const getSelctedItems = async (req, res) => {
         const { type, userId } = req.query;
 
         if (!type || !userId) {
-            return res.status(400).json({ message: "Missing type or userId" });
+             res.status(400).json({ message: "Missing type or userId" });
         }
         console.log('{type , userId}', { type, userId })
         const items = await material.find({
