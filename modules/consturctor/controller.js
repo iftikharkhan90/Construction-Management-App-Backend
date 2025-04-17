@@ -48,6 +48,17 @@ export const getConstructor = async (req,res) => {
         const { totalAmount = 0, payAmount = 0, remainingAmount = 0 } = aggregationResult[0] || {};
         console.log(totalAmount, payAmount, remainingAmount);
 
+        const consItems = await constructor.find({
+            // type,
+            userId,
+            remainingAmount: { $gt: 0 },
+            isLinked: false,
+        }).sort({ date: -1 })
+        console.log("Constructor's items:", consItems)
+        if (consItems.length === 0) {
+            return res.status(404).json({ message: "Items not found" });
+        }
+
         res.status(200).json({
              message: "Labourer Get Successfully", 
              Length: cons.length, 
@@ -55,6 +66,7 @@ export const getConstructor = async (req,res) => {
              payAmount, 
              remainingAmount,
              data: cons ,
+             selectedItems:consItems
             })
     } catch (error) {
         console.log(error);        

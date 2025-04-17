@@ -150,9 +150,9 @@ export const getSelctedItems = async (req, res) => {
     try {
         const { type, userId } = req.query;
 
-        if (!type || !userId) {
-             res.status(400).json({ message: "Missing type or userId" });
-        }
+        // if (!type || !userId) {
+        //      res.status(400).json({ message: "Missing type or userId" });
+        // }
         console.log('{type , userId}', { type, userId })
         const items = await material.find({
             type,
@@ -161,7 +161,7 @@ export const getSelctedItems = async (req, res) => {
             isLinked: false,
         }).sort({ date: -1 })
         const consItems = await constructor.find({
-            type,
+            // type,
             userId,
             remainingAmount: { $gt: 0 },
             isLinked: false,
