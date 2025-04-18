@@ -100,7 +100,7 @@ export const createLinkedItemConstructor = async (req, res) => {
         selected.remainingAmount = updatedRemaining;
         await selected.save();
 
-        const newLinkedItem = await material.create({
+        const newLinkedItem = await constructor.create({
             name: selected.itemName,
             itemPrice: selected.itemPrice,
             linkedAmount: payAmount,
