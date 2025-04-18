@@ -5,6 +5,9 @@ const material = new mongoose.Schema({
         type: String,
         // required:true,
     },
+    name:{
+        type: String,
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
@@ -32,7 +35,7 @@ const material = new mongoose.Schema({
     },
     type: {
         type: String,
-        required: true
+        // required: true
     },
     date: {
         type: Date,
@@ -44,6 +47,9 @@ const material = new mongoose.Schema({
     },
     selectedItem: {
         type: String
+    },
+    linkedAmount:{
+        type: Number,
     }
 })
 

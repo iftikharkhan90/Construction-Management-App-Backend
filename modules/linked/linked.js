@@ -32,19 +32,32 @@ export const createLinkedItem = async (req, res) => {
         selected.remainingAmount = updatedRemaining;
         await selected.save();
 
+        // const newLinkedItem = await material.create({
+        //     name: selected.itemName,
+        //     itemPrice: selected.itemPrice,
+        //     // totalItems: 0,
+        //     // totalAmount: 0,
+        //     linkedAmount:payAmount,
+        //     // remainingAmount: updatedRemaining,
+        //     type,
+        //     date: formattedDate,
+        //     userId,
+        //     isLinked: true,
+        //     selectedItem: selected._id.toString()
+        // })
         const newLinkedItem = await material.create({
-            itemName: selected.itemName,
+            name: selected.itemName,           
             itemPrice: selected.itemPrice,
-            // totalItems: 0,
-            // totalAmount: 0,
-            payAmount,
-            // remainingAmount: updatedRemaining,
+            linkedAmount: payAmount,
             type,
             date: formattedDate,
             userId,
             isLinked: true,
             selectedItem: selected._id.toString()
         })
+
+        console.log("new " , newLinkedItem);
+        
         return res.status(200).json({
             message: "Linked item processed successfully",
             originalSelectedItem: originalSelected,
@@ -87,19 +100,19 @@ export const createLinkedItemConstructor = async (req, res) => {
         selected.remainingAmount = updatedRemaining;
         await selected.save();
 
-        const newLinkedItem = await constructor.create({
-            itemName: selected.itemName,
+        const newLinkedItem = await material.create({
+            name: selected.itemName,
             itemPrice: selected.itemPrice,
-            // totalItems: 0,
-            // totalAmount: 0,
-            payAmount,
-            // remainingAmount: updatedRemaining,
-            type,
+            linkedAmount: payAmount,
+            type:selected.type,
             date: formattedDate,
             userId,
             isLinked: true,
             selectedItem: selected._id.toString()
         })
+
+        console.log("new ", newLinkedItem);
+        
         return res.status(200).json({
             message: "Linked item processed successfully",
             originalSelectedItem: originalSelected,

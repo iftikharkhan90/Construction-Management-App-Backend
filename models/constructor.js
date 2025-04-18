@@ -5,6 +5,9 @@ const constructor = new mongoose.Schema({
         type:String,
         // required:true,
     },
+    name:{
+        type:String,
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
@@ -37,6 +40,9 @@ const constructor = new mongoose.Schema({
     selectedItem: { 
         type: String,
         default: null,
+    },
+    linkedAmount:{
+        type: Number,
     }
 })
 
