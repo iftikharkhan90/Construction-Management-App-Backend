@@ -63,7 +63,14 @@ export const getMaterial = async(req,res) => {
                 $group: {
                     _id: null,
                     totalAmount: { $sum: "$totalAmount" },
-                    payAmount: { $sum: "$payAmount" },
+                    payAmount: {
+                        $sum: {
+                            $add: [
+                                { $ifNull: ["$payAmount", 0] },
+                                { $ifNull: ["$linkedAmount", 0] }
+                            ]
+                        }
+                    },
                     remainingAmount: { $sum: "$remainingAmount" }
                 }
             }
