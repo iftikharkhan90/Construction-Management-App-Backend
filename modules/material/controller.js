@@ -67,7 +67,8 @@ export const getMaterial = async(req,res) => {
                     remainingAmount: { $sum: "$remainingAmount" }
                 }
             }
-        ])
+        ]);
+        
         const { totalAmount = 0, payAmount = 0, remainingAmount = 0 } = aggregationResult[0] || {};
         console.log(totalAmount , payAmount , remainingAmount);
         return res.status(200).json({

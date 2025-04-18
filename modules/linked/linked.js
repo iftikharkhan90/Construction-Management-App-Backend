@@ -129,9 +129,9 @@ export const createLinkedItemConstructor = async (req, res) => {
 export const getLinkedItem = async (req, res) => {
     try {
         const { type, userId } = req.query
-        if (!type || !userId) {
-            return res.status(400).json({ message: "Missing type or userId in query" })
-        }
+        // if (!type || !userId) {
+        //     return res.status(400).json({ message: "Missing type or userId in query" })
+        // }
         const materials = await material.find({
             type,
             userId,
@@ -143,9 +143,9 @@ export const getLinkedItem = async (req, res) => {
             isLinked: true
         }).sort({ date: -1 })
         
-        if (materials.length === 0 && cons.length === 0) {
-            return res.status(404).json({ message: "No linked items found"  });
-        }
+        // if (materials.length === 0 && cons.length === 0) {
+        //     return res.status(404).json({ message: "No linked items found"  });
+        // }
         return res.status(200).json({
             message: "Linked items fetched successfully",
             data: materials, 
