@@ -5,9 +5,9 @@ import mongoose from 'mongoose'
 
 export const createConstructor = async (req,res) => {
     try {
-        const {name , totalAmount , payAmount  , type , date , linked , userId} = req.body
-        const capitalizedData = capitalizeFields({ name , type }, ["name" , "type"]);
-        const capitalName = capitalizedData.name;
+        const {itemName , totalAmount , payAmount  , type , date , linked , userId} = req.body
+        const capitalizedData = capitalizeFields({ itemName , type }, ["itemName" , "type"]);
+        const capitalitemName = capitalizedData.itemName;
         const capitalType = capitalizedData.type
         const remain = totalAmount - payAmount
         const formattedDate = moment(req.body.date, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -15,7 +15,7 @@ export const createConstructor = async (req,res) => {
         if (remain < 0) {
             return res.status(401).json({ message: "Please enter correct payment" })
         }
-        const body={name:capitalName,totalAmount,payAmount,remainingAmount:remain,type:capitalType,date:formattedDate,linked,userId}
+        const body={itemName:capitalitemName,totalAmount,payAmount,remainingAmount:remain,type:capitalType,date:formattedDate,linked,userId}
         const data = await constructor.create(body)
         res.status(200).json({message:"created successfully" , Data:data , userId:userId})
     } catch (error) {
@@ -81,10 +81,10 @@ export const updateConstructor = async (req,res) => {
         if (!iD) {
             return res.status(404).json({message:"Constructor not Found"})
         }
-        const {name , totalAmount , payAmount , type} = req.body
+        const {itemName , totalAmount , payAmount , type} = req.body
         const remain = totalAmount - payAmount
         const body = {
-            name,
+            itemName,
             totalAmount,
             payAmount,
             remainingAmount: remain,
